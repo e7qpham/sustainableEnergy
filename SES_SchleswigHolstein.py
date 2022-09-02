@@ -342,15 +342,15 @@ energysystem.dump('../results/dumps',
                   filename='model.oemof')
 
 #%% Restore EnergySystem results
-# energysystem = solph.EnergySystem()
+energysystem = solph.EnergySystem()
 
 # # Restore optimization results
-# energysystem.restore('../results/dumps', filename='model.oemof')
+energysystem.restore('../results/dumps', filename='model.oemof')
 
 #%% Extract results 
 results = energysystem.results['main']
 # Extract results dict
-#results = solph.processing.results(om)
+results = solph.processing.results(om)
 
 # Extract component results
 results_wind_offshore = solph.views.node(results, 'wind_offshore_l')
@@ -538,10 +538,6 @@ with pd.ExcelWriter('../results/results_overview.xlsx', engine='xlsxwriter') as 
     results_inv_costs_df.to_excel(writer, sheet_name='inv_costs')
     results_storages_soc_a_df.to_excel(writer, sheet_name='soc_a')
     
-#%% Results check --> Maybe assignment
-
-## MUSS NOCH UMGESCHRIEBEN WREDEN FÜR LABELS!!
-
 ## Wind onshore check
 capacity_factor_wind_onshore = results_wind_onshore['sequences'] \
                      / (results[(wind_onshore, bus_electricity)]['scalars']['invest']+capacities['onshore']['capacity_existing'])
